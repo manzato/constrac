@@ -1,0 +1,8 @@
+<template name='side_bar'>
+  <div class="collection">
+    {{#each items}}
+      <a href="{{url}}" class="collection-item {{#if active}}active{{/if}}">{{label}}</a>
+    {{/each}}
+  </div>
+
+</template>

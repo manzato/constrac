@@ -1,0 +1,24 @@
+<template name="project_list" >
+  <div class='project_list' >
+    <table width='100%' class='striped bordered'>
+      <thead>
+        <tr>
+          <td>Projecto</td>
+          <td>Horas utilizadas</td>
+          <td>Horas estimadas</td>
+          <td>Progreso (en base a la estimacion)</td>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each  projects}}
+        <tr>
+          <td>{{label}}</td>
+          <td>{{hours.actual}}</td>
+          <td>{{hours.estimate}}</td>
+          <td>{{projectProgress}}</td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </div>
+</template>

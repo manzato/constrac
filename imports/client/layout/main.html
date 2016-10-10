@@ -1,0 +1,37 @@
+<template name="MainLayout">
+  <!-- Dropdown Structure -->
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="#!">one</a></li>
+    <li><a href="#!">two</a></li>
+    <li class="divider"></li>
+    <li><a href="/logout">Logout</a></li>
+  </ul>
+
+  <nav class='teal'>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo hide-on-med-and-down">Constrac</a>
+      {{#if Template.subscriptionsReady}}
+      <div class="brand-logo center">
+        {{projectLabel}}
+      </div>
+      {{/if}}
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li>
+          <a class="dropdown-button" href="#!" data-activates="dropdown1">
+            Dropdown<i class="material-icons right">arrow_drop_down</i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  {{#if isAuthenticated}}
+    {{#if Template.subscriptionsReady}}
+      {{>Template.dynamic template=content}}
+    {{/if}}
+  {{else}}
+    {{> login}}
+  {{/if}}
+
+</template>

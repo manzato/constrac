@@ -1,0 +1,48 @@
+
+
+UL.node {
+  padding: 0px;
+  margin: 0px;
+}
+
+.tasks-tree > UL {
+  padding-left: 0px;
+  border: 1px solid #333;
+  border-top: 0px;
+}
+
+.tasks-tree .toggle {
+  display: inline;
+  padding: 0px;
+  margin: 0px;
+}
+
+.tasks-tree .toggle > .open {
+  cursor: pointer;
+}
+
+.tasks-tree .toggle > .close {
+  cursor: pointer;
+}
+
+.node {
+
+}
+
+.parent {
+  border-top: 1px solid #333;
+  background-color: #d1d1d1;
+}
+
+.child {
+  border-top: 1px solid #333;
+  background-color: #f1f1f1;
+  /*
+  border-bottom: 1px solid #ddd;
+
+  */
+}
+
+.parent > .label.closed {
+  /*font-weight: bold;*/
+}

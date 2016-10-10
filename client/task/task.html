@@ -1,0 +1,37 @@
+<template name='tasks' >
+  <ul class='node'>
+    {{#each tasks}}
+      <li class='node {{#if isChild}}child{{else}}parent{{/if}}'>{{> task}}</li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name='task' >
+  <div class='toggle' >
+  {{#if isChild}}
+    <i class="tiny material-icons">label_outline</i>
+  {{else}}
+    {{#if isOpen}}
+      <i class="tiny material-icons close">remove</i>
+    {{else}}
+      <i class="tiny material-icons open">add</i>
+    {{/if}}
+  {{/if}}
+  </div>
+
+  {{code}} -
+
+  <span class='label {{#if isOpen}}open{{else}}closed{{/if}}' >
+  {{label}}
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  {{hours.actual}} out of {{hours.estimate}} ({{taskProgress}})
+  </span>
+
+  {{#unless isChild}}
+    {{#if isOpen}}
+      {{> tasks getChilds}}
+    {{/if}}
+  {{/unless}}
+
+</template>

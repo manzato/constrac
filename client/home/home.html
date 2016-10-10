@@ -1,0 +1,16 @@
+<template name="home" >
+  <div class='projects' >  
+    <ul>
+    {{#each  projects}}
+      <li><a href='/projects/{{_id}}/info' >{{label}}</a></li>
+    {{/each}}
+    </ul>
+
+    {{> project_new}}
+
+    <!-- Modal Trigger -->
+    <a class="modal-trigger waves-effect waves-light btn" href="#newProjectModal">
+      <i class="material-icons left">add</i>Nuevo
+    </a>
+  </div>
+</template>
