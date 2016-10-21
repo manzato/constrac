@@ -1,0 +1,44 @@
+<template name="ProjectQuotesNew" >
+  <div id="newProgressReport" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Nuevo reporte de avance</h4>
+      <div class='row'>
+        <div class="input-field col s1">
+          <input id="label" type="text" class="validate active" >
+          <label for="label">Numero</label>
+        </div>
+        <div class="input-field col s5">
+          <input id="description" type="text" class="validate">
+          <label for="description">Descripcion</label>
+        </div>
+        <div class="input-field col s3" >
+          <input id="start" type="date" class="datepicker">
+          <label for="start">Inicio</label>
+        </div>
+        <div class="input-field col s3" >
+          <input id="finish" type="date" class="datepicker">
+          <label for="finish">Fin</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">textsms</i>
+              <input type="text" id="autocomplete-input" class="autocomplete">
+              <label for="autocomplete-input">Autocomplete</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="waves-effect waves-red btn create" href="">
+        Crear
+      </a>
+      <a href="" class="modal-action modal-close waves-effect waves-red btn-flat">
+        Cancelar
+      </a>
+    </div>
+  </div>
+</template>

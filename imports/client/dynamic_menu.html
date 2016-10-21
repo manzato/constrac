@@ -1,0 +1,10 @@
+<template name="DynamicMenu">
+  <div class="collection">
+  {{#each menuItems}}
+    <a href="{{url}}" class="collection-item {{#if active}}active{{/if}}">{{label}}</a>
+  {{/each}}
+  </div>
+
+  {{> yield "actionBar"}}
+
+</template>

@@ -1,11 +1,11 @@
 import { Template } from 'meteor/templating';
 import './project_list.html';
 
-Template.project_list.onCreated( function() {
+Template.ProjectList.onCreated( function() {
   this.subscribe('projects-all');
 });
 
-Template.project_list.helpers({
+Template.ProjectList.helpers({
   projects: () => {
     return Projects.find({});
   },

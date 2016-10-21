@@ -1,4 +1,4 @@
-<template name="MainLayout">
+<template name="ProjectLayout">
   <!-- Dropdown Structure -->
   <ul id="dropdown1" class="dropdown-content">
     <li><a href="{{urlFor route='ProjectList'}}">Proyectos</a></li>
@@ -27,7 +27,17 @@
 
   {{#if isAuthenticated}}
     {{#if Template.subscriptionsReady}}
-      {{> yield}}
+      <div class="project_info" >
+        <div class="row">
+          <div class="col m3 l2 hide-on-small-only">
+            {{> yield "leftMenuBar"}}
+          </div>
+
+          <div class="col m9 l10 ">
+            {{> yield}}
+          </div>
+        </div>
+      </div>
     {{/if}}
   {{else}}
     {{> login}}

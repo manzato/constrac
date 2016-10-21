@@ -1,0 +1,51 @@
+<template name="ProgressReports" >
+  {{> progress_report_new}}
+
+  {{#contentFor "actionBar"}}
+  <!--
+    <a class="waves-effect waves-light btn new-report" ">
+      <i class="material-icons left disabled" >add</i>Nuevo
+    </a>-->
+
+  {{/contentFor}}
+
+  <div class="row" >
+    <div class="col s6">
+      <h4>Reportes de avance</h4>
+    </div>
+    <div class="col s6 valign-wrapper">
+      <a class="btn-floating btn waves-effect waves-light new-report valign"
+        disabled="{{#unless isStarted}}disabled{{/unless}}">
+        <i class="material-icons">add</i>
+      </a>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col s12">
+      <table width='100%' class='striped bordered'>
+        <thead>
+          <tr>
+            <td>Nro</td>
+            <td>Descripcion</td>
+            <td>Horas estimadas</td>
+            <td>Progreso (en base a la estimacion)</td>
+            <td>Inicio</td>
+            <td>Fin</td>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each reports}}
+          <tr>
+            <td>{{label}}</td>
+            <td>{{description}}</td>
+            <td>{{hours.estimate}}</td>
+            <td>{{projectProgress}}</td>
+            <td>{{{formatDate start}}}</td>
+            <td>{{{formatDate finish}}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

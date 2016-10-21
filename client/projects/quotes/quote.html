@@ -1,0 +1,40 @@
+<template name="ProjectQuotes" >
+  {{> ProjectQuotesNew}}
+
+  <div class="row" >
+    <div class="col s6">
+      <h4>Cotizaciones</h4>
+    </div>
+    <div class="col s6 valign-wrapper">
+      <a class="btn-floating btn waves-effect waves-light new-report valign"
+        disabled="{{#unless isStarted}}disabled{{/unless}}">
+        <i class="material-icons">add</i>
+      </a>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col s12">
+      <table width='100%' class='striped bordered'>
+        <thead>
+          <tr>
+            <td>Nombre</td>
+            <td>Descripcion</td>
+            <td>Horas estimadas</td>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each items}}
+          <tr>
+            <td>{{label}}</td>
+            <td>{{description}}</td>
+            <td>{{hours.estimate}}</td>
+            <td>{{projectProgress}}</td>
+            <td>{{{formatDate start}}}</td>
+            <td>{{{formatDate finish}}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

@@ -5,6 +5,15 @@ UL.node {
   margin: 0px;
 }
 
+.tasks-tree .level0 {
+}
+
+.tasks-tree .level1 {
+}
+
+.tasks-tree .level2 {
+}
+
 .tasks-tree > UL {
   padding-left: 0px;
   border: 1px solid #333;
@@ -34,13 +43,14 @@ UL.node {
   background-color: #d1d1d1;
 }
 
-.child {
+.child, .loading-child {
   border-top: 1px solid #333;
   background-color: #f1f1f1;
-  /*
-  border-bottom: 1px solid #ddd;
+}
 
-  */
+.loading-child {
+  padding: 5px;
+  margin: auto;
 }
 
 .parent > .label.closed {

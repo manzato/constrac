@@ -1,19 +1,19 @@
 
 import { Template } from 'meteor/templating';
 
-import './main.html';
+import './project_layout.html';
 
-Template.MainLayout.onCreated( function() {
+Template.ProjectLayout.onCreated( function() {
   //if (FlowRouter.getParam("projectId")) {
   //  this.subscribe('project-label', FlowRouter.getParam("projectId"));
   //}
 });
 
-Template.MainLayout.onRendered( function() {
+Template.ProjectLayout.onRendered( function() {
   this.$(".dropdown-button").dropdown();
 });
 
-Template.MainLayout.helpers({
+Template.ProjectLayout.helpers({
   isAuthenticated() {
     return Meteor.user() ? true:false;
   },

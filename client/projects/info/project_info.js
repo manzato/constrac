@@ -1,6 +1,10 @@
 import { Template } from 'meteor/templating';
 import './project_info.html';
-import Gauge from '/imports/client/charts/gauge.js';
+import Gauge from '/imports/client/charts/gauge';
+import Project from '/imports/common/project';
+//import Logger from '/manzato/logging';
+
+const logger = Logger.getLogger('projects:info');
 
 var gauges = [];
 
@@ -59,37 +63,44 @@ function createDeviationGauge(name, label, range) {
   return gauge;
 };
 
-Template.project_info.onCreated( function() {
-  const projectId = FlowRouter.getParam("projectId");
+Template.ProjectInfo.onCreated( function() {
   const template = this;
+  const project = template.data;
 
-  this.subscribe('project-single', projectId, {
+  this.subscribe('project-single', project._id, {
     onReady: () => {
       template.autorun( () => {
-        const project = Projects.findOne({ _id:projectId }, { fields: { deviation:1 }});
-        template.deviationGauge.redraw(project.deviation);
+        if (project.isAtLeastStarted()) {
+          const deviation = Projects.findOne({ _id:project._id }, {
+            fields: { deviation:1 }
+          }).deviation;
+          template.deviationGauge && template.deviationGauge.redraw(project.deviation);
+        }
       });
     }
   });
 });
 
-Template.project_info.onRendered( function() {
-  this.deviationGauge = createDeviationGauge("deviation", "Desviación", 50);
+Template.ProjectInfo.onRendered( function() {
+  const project = this.data;
+
+  if (project.isAtLeastStarted()) {
+    logger.debug('Creating deviation gauge');
+    this.deviationGauge = createDeviationGauge("deviation", "Desviación", 50);
+  }
 });
 
-Template.project_info.helpers({
-  project: function() {
-    const instance = Template.instance();
-    if (! instance.project) {
-       instance.project = Projects.findOne({ _id:FlowRouter.getParam("projectId") });
-    }
-    return instance.project;
+Template.ProjectInfo.helpers({
+});
+
+Template.ProjectInfo.events({
+  'click .start': () => {
+    Iron.controller().startProject();
   },
-  side_bar_items: () => {
-    return [
-      {label:'Detalles', url:'info',  active:true},
-      {label:'Reportes diarios', url:'progress-reports'},
-      {label:'Tareas', url:'tasks'}
-    ];
+  'click .restart': () => {
+    Iron.controller().restartProject();
+  },
+  'click .pause': () => {
+    Iron.controller().pauseProject();
   }
 });

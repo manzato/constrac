@@ -16,9 +16,12 @@ Template.project_new.events({
     Projects.insert({
       label:label,
       description:description
-    }, (err, project_id) => {
+    }, (err, projectId) => {
       instance.$('#newProjectModal').closeModal();
-      FlowRouter.go('/projects/' + project_id);
+
+      Router.go(
+        Router.routes['ProjectInfo'].path({ projectId:projectId })
+      );
     });
   }
 });

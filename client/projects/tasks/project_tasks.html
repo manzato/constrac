@@ -1,24 +1,14 @@
-<template name='project_tasks' >
-  <div class="project_tasks" >
-    <div class="row">
-      <div class="col m3 l2 hide-on-med-and-down">
-        {{> side_bar side_bar_items}}
-      </div>
+<template name='ProjectTasks' >
+  <div class="row" >
+    <div class="col s12">
+      <h4>Tareas que componen el trabajo</h4>
 
-      <div class="col m7 l10">
-        <div class="row" >
-          <div class="col s12">
-            <span class='subpage-title'>Tareas que componen el trabajo</span>
-
-            <div class='tasks-tree' >
-              {{#if Template.subscriptionsReady}}
-                {{> tasks projectTasks}}
-              {{else}}
-                Loading...
-              {{/if}}
-            </div>
-          </div>
-        </div>
+      <div class='tasks-tree' >
+        {{#if Template.subscriptionsReady}}
+          {{> tasks projectTasks}}
+        {{else}}
+          Loading...
+        {{/if}}
       </div>
     </div>
   </div>

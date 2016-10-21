@@ -1,8 +1,10 @@
 <template name="home" >
-  <div class='projects' >  
+  <div class='projects' >
     <ul>
     {{#each  projects}}
-      <li><a href='/projects/{{_id}}/info' >{{label}}</a></li>
+      <li>
+        <a href="{{pathFor route='ProjectInfo' projectId=_id}}">{{label}}</a>
+      </li>
     {{/each}}
     </ul>
 

@@ -1,63 +1,30 @@
 import { Meteor } from 'meteor/meteor';
+import addConstant from '/imports/common/utils';
+import Project from '/imports/common/project';
+import Quote from '/imports/model/quote';
+//import Logger from 'manzato/logging';
 
-const addConstant = (clazz, name, value) => {
-  Object.defineProperty(clazz, name, {
-      value: value,
-      writable : false,
-      enumerable : true,
-      configurable : false
-  });
-};
-
-class Project {
+class Task extends EventEmitter {
   constructor(doc) {
+    super();
     _.extend(this, doc);
+    this._open = new ReactiveVar(false);
   }
 
-  getTopLevelTasks() {
-    return Tasks.find({project_id:this._id, parent:null});
+  isOpen() {
+    return this._open.get();
   }
 
-  updateTasks() {
-    const hours = {
-      estimate: 0,
-      actual: 0
-    };
-
-    this.getTopLevelTasks().forEach((task) => {
-      task.updateTasks();
-
-      try {
-        hours.estimate += task.hours.estimate;
-        hours.actual += task.hours.actual;
-      } catch (e) {
-        console.log('Failed to process ' + (task.hasChilds()?'node':'leaf') + ' ' + task.code + ':',e, task);
-      }
-
-      let progress = 0;
-      if (!hours.estimate || !hours.actual) {
-        progress = 0;
-      } else {
-        progress = (hours.actual / hours.estimate ) * 100;
-      }
-      Projects.update({ _id:this._id }, {
-        $set: {
-          progress:progress,
-          hours:hours
-        }
-      });
-
-      //Makes the hours available to in-memmory processes
-      this.hours = hours;
-    });
+  open() {
+    console.log('Opening task');
+    this._open.set(true);
+    this.emit('open');
   }
-};
 
-addConstant(Project, 'STATE_CREATED', 'created');
-
-class Task {
-  constructor(doc) {
-    _.extend(this, doc);
+  close() {
+    console.log('Closing task');
+    this._open.set(false);
+    this.emit('close');
   }
 
   getChilds() {
@@ -111,12 +78,6 @@ class Task {
   }
 };
 
-class AdvanceReport {
-  constructor(doc) {
-    _.extend(this, doc);
-  }
-};
-
 Projects = new Meteor.Collection("projects", {
   transform: function(doc) {
     return new Project(doc);
@@ -143,19 +104,24 @@ Tasks = new Meteor.Collection("tasks", {
 });
 Tasks.attachBehaviour('timestampable');
 
-AdvanceReports = new Meteor.Collection("advance-reports", {
+class ProgressReport {
+  constructor(doc) {
+    _.extend(this, doc);
+  }
+};
+
+ProgressReports = new Meteor.Collection("progressReports", {
   transform: function(doc) {
-    return new AdvanceReport(doc);
+    return new ProgressReport(doc);
   }
 });
-AdvanceReports.attachBehaviour('timestampable');
 
-if (Meteor.isServer) {
-  Meteor.startup( () => {
-    Meteor.setInterval(() => {
+ProgressReports.attachBehaviour('timestampable');
 
-      Projects.update({label:'test2'}, {$set:{deviation:20 - (40 * Math.random())}})
+Quotes = new Meteor.Collection("quotes", {
+  transform: function(doc) {
+    return new Quote(doc);
+  }
+});
 
-    }, 500);
-  });
-}
+Quotes.attachBehaviour('timestampable');

@@ -6,8 +6,11 @@ Meteor.startup(() => {
   let current = 0;
   let goal = 0;
   let increments = 0;
-  console.log('SIMULATION ON');
 
+  if (true) {
+    return;
+  }
+  console.log('SIMULATION ON');
   Meteor.setInterval( () => {
     if (current >= goal) {
       current = 0;

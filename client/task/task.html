@@ -1,7 +1,7 @@
 <template name='tasks' >
   <ul class='node'>
     {{#each tasks}}
-      <li class='node {{#if isChild}}child{{else}}parent{{/if}}'>{{> task}}</li>
+      <li class='node level{{level}} {{#if isChild}}child{{else}}parent{{/if}}'>{{> task}}</li>
     {{/each}}
   </ul>
 </template>
@@ -23,15 +23,32 @@
 
   <span class='label {{#if isOpen}}open{{else}}closed{{/if}}' >
   {{label}}
-
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   {{hours.actual}} out of {{hours.estimate}} ({{taskProgress}})
   </span>
-
   {{#unless isChild}}
     {{#if isOpen}}
-      {{> tasks getChilds}}
+      {{#if Template.subscriptionsReady}}
+        {{> tasks getChilds}}
+      {{else}}
+        <ul class='node'>
+          <li class='node loading-child center-align'>
+            <div class="preloader-wrapper small active">
+              <div class="spinner-layer spinner-teal-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      {{/if}}
     {{/if}}
   {{/unless}}
-
 </template>

@@ -12,7 +12,7 @@ const addTask = function(taskDefinition, childs) {
 };
 
 
-Meteor.startup(() => {
+false && Meteor.startup(() => {
 
   if (true) {
     return;
@@ -29,28 +29,28 @@ Meteor.startup(() => {
     description: 'Construccion de casa unifamiliar de 324m'
   });
 
-  addTask({project_id:projectId, code: '1', label:'Subsuelo'}, [
-    addTask({project_id:projectId, code: '1.1', label:'Armado general de vigas'}, [
-      addTask({project_id:projectId, code: '1.1.1', label:'Vigas fundación', hours: {estimate:10, actual:1 }}),
-      addTask({project_id:projectId, code: '1.1.2', label:'Vigas perimetrales', hours: {estimate:10, actual:1 }}),
-      addTask({project_id:projectId, code: '1.1.3', label:'Columnas', hours: {estimate:10, actual:9 }}),
-      addTask({project_id:projectId, code: '1.1.4', label:'Encadenados', hours: {estimate:10, actual:10 }})
+  addTask({project_id:projectId, code: '1', label:'Subsuelo', level:0}, [
+    addTask({project_id:projectId, code: '1.1', label:'Armado general de vigas', level:1}, [
+      addTask({project_id:projectId, code: '1.1.1', label:'Vigas fundación', level:2, hours: {estimate:10, actual:1 }}),
+      addTask({project_id:projectId, code: '1.1.2', label:'Vigas perimetrales', level:2, hours: {estimate:10, actual:1 }}),
+      addTask({project_id:projectId, code: '1.1.3', label:'Columnas', level:2, hours: {estimate:10, actual:9 }}),
+      addTask({project_id:projectId, code: '1.1.4', label:'Encadenados', level:2, hours: {estimate:10, actual:10 }})
     ]),
-    addTask({project_id:projectId, code: '1.2', label:'Replanteo', hours: {estimate:10, actual:1 }}),
-    addTask({project_id:projectId, code: '1.3', label:'Nivelado', hours: {estimate:10, actual:1 }}),
-    addTask({project_id:projectId, code: '1.4', label:'colocación de polietileno', hours: {estimate:10, actual:1 }}),
-    addTask({project_id:projectId, code: '1.5', label:'colocación de vigas'}, [
-      addTask({project_id:projectId, code: '1.5.1', label:'Vigas fundación', hours: {estimate:10, actual:1 }}),
-      addTask({project_id:projectId, code: '1.5.2', label:'Vigas perimetrales', hours: {estimate:10, actual:1 }})
+    addTask({project_id:projectId, code: '1.2', label:'Replanteo', level:1, hours: {estimate:10, actual:1 }}),
+    addTask({project_id:projectId, code: '1.3', label:'Nivelado', level:1, hours: {estimate:10, actual:1 }}),
+    addTask({project_id:projectId, code: '1.4', label:'colocación de polietileno', level:1, hours: {estimate:10, actual:1 }}),
+    addTask({project_id:projectId, code: '1.5', label:'colocación de vigas', level:1} , [
+      addTask({project_id:projectId, code: '1.5.1', label:'Vigas fundación', level:2, hours: {estimate:10, actual:1 }}),
+      addTask({project_id:projectId, code: '1.5.2', label:'Vigas perimetrales', level:2, hours: {estimate:10, actual:1 }})
     ]),
-    addTask({project_id:projectId, code: '1.6', label:'Posición de columnas', hours: {estimate:10, actual:1 }}),
-    addTask({project_id:projectId, code: '1.7', label:'Encofrado perimetral', hours: {estimate:10, actual:1 }}),
-    addTask({project_id:projectId, code: '1.8', label:'Llenado de platea', hours: {estimate:10, actual:1 }})
+    addTask({project_id:projectId, code: '1.6', label:'Posición de columnas', level:1, hours: {estimate:10, actual:1 }}),
+    addTask({project_id:projectId, code: '1.7', label:'Encofrado perimetral', level:1, hours: {estimate:10, actual:1 }}),
+    addTask({project_id:projectId, code: '1.8', label:'Llenado de platea', level:1, hours: {estimate:10, actual:1 }})
   ]);
 
-  addTask({project_id:projectId, code: '2', label:'Planta baja'}, [
-    addTask({project_id:projectId, code: '2.1', label:'Subsuelo 1.1',hours: {estimate:100, actual:1 }}),
-    addTask({project_id:projectId, code: '2.2', label:'Subsuelo 1.2',hours: {estimate:20, actual:20 }})
+  addTask({project_id:projectId, code: '2', label:'Planta baja', level:0}, [
+    addTask({project_id:projectId, code: '2.1', label:'Subsuelo 1.1', level:1, hours: {estimate:100, actual:1 }}),
+    addTask({project_id:projectId, code: '2.2', label:'Subsuelo 1.2', level:1, hours: {estimate:20, actual:20 }})
   ]);
 
   const top = Tasks.find({project_id:projectId, parent:null}).map(function(task) {

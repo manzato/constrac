@@ -1,42 +1,47 @@
-<template name="project_info" >
+<template name="ProjectInfo" >
   <div class="project_info" >
-    <div class="row">
-      <div class="col m3 l2 hide-on-med-and-down">
-        {{> side_bar side_bar_items}}
+    <div class="row" >
+      <div class="col s12 m6">
+        <div class="card-panel blue-grey hoverable">
+          <span class="white-text">{{description}}</span>
+        </div>
+
+        <span id="deviationGaugeContainer"></span>
       </div>
 
-      <div class="col m7 l10">
-        <div class="row" >
-          <div class="col s12 m6">
-            <div class="card-panel blue-grey">
-              <span class="white-text">{{project.description}}</span>
-            </div>
-
-            <span id="deviationGaugeContainer"></span>
+      <div class="col s12 m6">
+        <div class="card blue-grey darken-1 hoverable">
+          <div class="card-content white-text">
+            <span class="card-title">Detalles</span>
+            <p>
+              <dl>
+                <dt>Estado:</dt>
+                <dd>{{ state}}</dd>
+                <dt>Fecha inicio:</dt>
+                <dd>{{{formatDateTime startedAt}}}</dd>
+                <dt>Modificado:</dt>
+                <dd>{{{formatDateTime updatedAt}}}</dd>
+                <dt>Creado:</dt>
+                <dd>{{{formatDateTime createdAt}}}</dd>
+              </dl>
+            </p>
           </div>
-
-          <div class="col s12 m6">
-            <div class="card blue-grey darken-1">
-              <div class="card-content white-text">
-                <span class="card-title">Detalles</span>
-                <p>
-                  <dl>
-                    <dt>Creado:</dt>
-                    <dd>{{{formatDateTime project.createdAt}}}</dd>
-                    <dt>Modificado</dt>
-                    <dd>{{{formatDateTime project.modifiedAt}}}</dd>
-                  </dl>
-                </p>
-              </div>
-              <div class="card-action">
-                <a href="#">This is a link</a>
-                <a href="#">This is a link</a>
-              </div>
-            </div>
-
-            <span id="deviationGaugeContainer"></span>
+          <div class="card-action">
+            <a href="#">This is a link</a>
+            {{#if isPaused}}
+              <a href="#" class="waves-effect waves-light big-btn btn start right">Resumir</a>
+            {{/if}}
+            {{#if isStarted}}
+              <a class="waves-effect waves-light big btn yellow darken-2 pause right"><i class="material-icons left">pause</i>Pausar</a>
+            {{else}}
+              {{#unless isPaused}}
+                <a href="#" class="waves-effect waves-light btn start right">Iniciar</a>
+              {{/unless}}
+            {{/if}}
           </div>
         </div>
+
+        <span id="deviationGaugeContainer"></span>
       </div>
     </div>
   </div>

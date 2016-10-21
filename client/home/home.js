@@ -11,7 +11,7 @@ Template.home.onRendered( function() {
 
 Template.home.helpers({
   projects: () => {
-    return Projects.find({});
+    return Projects.find({}, { sort: { label: 1 }});
   },
   crumbs: () => {
     return [{

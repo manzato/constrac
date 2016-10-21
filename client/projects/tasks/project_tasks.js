@@ -3,24 +3,25 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './project_tasks.html';
 
-Template.project_tasks.onCreated(function projectOnCreated() {
-  const projectId = FlowRouter.getParam("projectId");
+Template.ProjectTasks.onCreated(function() {
+  const projectId = this.data._id;
 
   this.subscribe('project-single', projectId);
   this.subscribe('project-top-tasks', projectId);
 });
 
-Template.project_tasks.helpers({
+Template.ProjectTasks.helpers({
   projectTasks: function() {
-    const projectId = FlowRouter.getParam("projectId");
-
-    const project = Projects.findOne({ _id:projectId });
+    const projectId = this._id;
+    const project = Projects.findOne({ _id:projectId }, {
+      fields: { tasks:1 }
+    });
 
     const tasks = (project && project.tasks) || [];
 
-    return _.map(tasks, (taskId) => {
+    return _.sortBy(_.map(tasks, (taskId) => {
       return Tasks.findOne({_id:taskId});
-    });
+    }), 'code');
   },
   side_bar_items: () => {
     return [
