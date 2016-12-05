@@ -37,3 +37,13 @@ Meteor.publish('project-progress-reports', function(id) {
   check(id, String);
   return ProgressReports.find({ project_id:id });
 });
+
+Meteor.publish('project-quotes', function(id) {
+  check(id, String);
+  return Quotes.find({ project_id:id });
+});
+
+Meteor.publish('project-quote', function(projectId, id) {
+  check(id, String);
+  return Quotes.find({ _id:id, project_id:projectId });
+});

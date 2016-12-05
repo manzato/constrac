@@ -25,13 +25,13 @@ export default class Project {
     return value;
   }
 
-  isAtLeast(state) {
-    check(state, String);
+  isAtLeast(checkState) {
+    check(checkState, String);
     if (_.isUndefined(this.state)) {
       logger.warn("Can't check the state of this project, since it is undefined!");
       return false;
     }
-    switch(state) {
+    switch(checkState) {
       case Project.STATE_STARTED:
         return !(this.state === Project.STATE_CREATED);
       default:

@@ -39,3 +39,7 @@ Router.route('/projects/:projectId/tasks', {
 Router.route('/projects/:projectId/quotes', {
   name: 'ProjectQuotes'
 });
+
+Router.route('/projects/:projectId/quotes/:_id', {
+  name: 'QuoteEdit'
+});

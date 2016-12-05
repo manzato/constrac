@@ -16,26 +16,9 @@ Template.ProjectQuotesNew.onRendered( function() {
     selectYears: false, // Creates a dropdown of 15 years to control year
     format: 'yyyy-mm-dd'
   });
-
-  const self = this;
-  const projectId = self.data._id;
-
-  self.autorun(() => {
-    if (Template.instance().subscriptionsReady()) {
-      const tasks = {};
-      Tasks.find({ project_id:projectId, isChild:true, isComplete:false }).forEach((task) => {
-        const key = task.code + ' ' + task.label;
-        tasks[key] = null;
-      });
-
-      self.$('input.autocomplete').autocomplete({
-        data: tasks
-      });
-    }
-  })
 });
 
-Template.progress_report_new.events({
+Template.ProjectQuotesNew.events({
   'click .create': function(event, instance) {
     const projectId = instance.data._id;
     const label = instance.$('#label').val();
@@ -50,15 +33,14 @@ Template.progress_report_new.events({
     const finish = moment(instance.$('#finish').val(), "YYYY-MM-DD")
       .add(1, 'day').subtract(1, 'minute').toDate();
 
-    ProgressReports.insert({
+    Quotes.insert({
       label:label,
       description:description,
       start: start,
-      finish: finish,
       project_id:projectId
     }, (err) => {
       //TODO: Handle errors
-      instance.$('#newProgressReport').closeModal();
+      instance.$('#newItem').closeModal();
     });
   }
 });
