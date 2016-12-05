@@ -55,7 +55,6 @@ Template.ProgressReports.onRendered( function() {
 
 Template.ProgressReports.events({
   'click .new-report': function(evt, template) {
-    console.log('new report');
     openModal(template);
   }
 });
