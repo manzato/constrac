@@ -6,4 +6,4 @@ export default function addConstant(clazz, name, value) {
       enumerable : true,
       configurable : false
   });
-}
+};

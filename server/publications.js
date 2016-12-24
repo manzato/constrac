@@ -20,7 +20,7 @@ Meteor.publish('project-single-basic', function(id) {
 
 Meteor.publish('project-top-tasks', function(id) {
   check(id, String);
-  return Tasks.find({ project_id:id, parent:null });
+  return Tasks.find({ project_id:id, parent_id:null });
 });
 
 Meteor.publish('task-childs-open', function(id) {
@@ -30,7 +30,7 @@ Meteor.publish('task-childs-open', function(id) {
 
 Meteor.publish('task-childs', function(task_id) {
   check(task_id, String);
-  return Tasks.find({ parent:task_id });
+  return Tasks.find({ parent_id:task_id });
 });
 
 Meteor.publish('project-progress-reports', function(id) {
@@ -44,6 +44,14 @@ Meteor.publish('project-quotes', function(id) {
 });
 
 Meteor.publish('project-quote', function(projectId, id) {
+  check(projectId, String);
   check(id, String);
   return Quotes.find({ _id:id, project_id:projectId });
+});
+
+Meteor.publish('project-quote-items', function(projectId, quoteId) {
+  check(projectId, String);
+  check(quoteId, String);
+
+  return QuoteItems.find({ quote_id:quoteId, project_id:projectId });
 });

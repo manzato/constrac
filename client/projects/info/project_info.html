@@ -4,9 +4,18 @@
       <div class="col s12 m6">
         <div class="card-panel blue-grey hoverable">
           <span class="white-text">{{description}}</span>
+
+          <br>
+          <br>
+          <span class="white-text">Progress:</span>
+          <div class="progress">
+            <div class="determinate" style="width: {{progress}}%"></div>
+          </div>
+          <span class="white-text">Deviation:</span>
+          <br>
+          <span id="deviationGaugeContainer"></span>
         </div>
 
-        <span id="deviationGaugeContainer"></span>
       </div>
 
       <div class="col s12 m6">

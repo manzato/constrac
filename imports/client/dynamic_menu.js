@@ -1,5 +1,5 @@
 
-import Project from '/imports/common/project';
+import Project from '/imports/model/project';
 import './dynamic_menu.html';
 
 const createSubMenuItem = (name, currentName, label, urlContext) => {

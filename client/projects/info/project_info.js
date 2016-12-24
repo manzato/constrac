@@ -1,14 +1,13 @@
 import { Template } from 'meteor/templating';
 import './project_info.html';
 import Gauge from '/imports/client/charts/gauge';
-import Project from '/imports/common/project';
-//import Logger from '/manzato/logging';
+import Project from '/imports/model/project';
 
 const logger = Logger.getLogger('projects:info');
 
-var gauges = [];
+let gauges = [];
 
-function createGauge(name, label, min, max) {
+const createGauge = (name, label, min, max) => {
   const config = {
     size: 120,
     label: label,
@@ -27,7 +26,7 @@ function createGauge(name, label, min, max) {
   return gauge;
 }
 
-function createDeviationGauge(name, label, range) {
+const createDeviationGauge = (name, label, range) => {
 
   const min = -1 * (range / 2);
   const max = (range / 2);
@@ -74,7 +73,7 @@ Template.ProjectInfo.onCreated( function() {
           const deviation = Projects.findOne({ _id:project._id }, {
             fields: { deviation:1 }
           }).deviation;
-          template.deviationGauge && template.deviationGauge.redraw(project.deviation);
+          template.deviationGauge && template.deviationGauge.redraw(deviation);
         }
       });
     }

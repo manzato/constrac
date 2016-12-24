@@ -4,9 +4,7 @@ import { Template } from 'meteor/templating';
 import './main.html';
 
 Template.MainLayout.onCreated( function() {
-  //if (FlowRouter.getParam("projectId")) {
-  //  this.subscribe('project-label', FlowRouter.getParam("projectId"));
-  //}
+
 });
 
 Template.MainLayout.onRendered( function() {

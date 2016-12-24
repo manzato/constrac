@@ -9,11 +9,27 @@ Template.QuoteEdit.onCreated( function() {
   const quoteId = controller.params._id;
   const project = this.data;
   this.subscribe('project-quote', project._id, quoteId);
+  this.subscribe('project-quote-items', project._id, quoteId);
+  this.subscribe('project-single', project._id);
+  this.subscribe('project-top-tasks', project._id);
 
-  Template.ProjectTasks.onCreated(function() {
-    const projectId = this.data._id;
+});
 
-    this.subscribe('project-single', projectId);
-    this.subscribe('project-top-tasks', projectId);
-  });
+Template.QuoteEdit.helpers({
+  projectTasks: function() {
+    const projectId = this._id;
+    const project = Projects.findOne({ _id:projectId }, {
+      fields: { tasks:1 }
+    });
+
+    const tasks = (project && project.tasks) || [];
+
+    return _.sortBy(_.map(tasks, (taskId) => {
+      return Tasks.findOne({_id:taskId});
+    }), 'code');
+  },
+
+  quoteItems: function() {
+    return QuoteItems.find();
+  }
 });

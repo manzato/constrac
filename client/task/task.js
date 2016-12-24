@@ -46,13 +46,23 @@ Template.task.events({
   }
 });
 
+Template.tasks.onCreated( function() {
+  //console.log(this);
+});
+
 /***************************************************************/
 Template.tasks.helpers({
   tasks() {
-    return this;
-  //  return _.sortBy(this, function(task) {
-  //      console.log(task);
-  //      return task && task.code;
-  //  });
+  //  return _.sortBy(this, 'code');
+//   console.log(this);
+  //  return this;
+
+  //console.log("Tasks:")
+    const tasks = _.sortBy(this, function(task) {
+        return task && task.code;
+    });
+
+    //console.log("Done");
+    return tasks;
   }
 });

@@ -1,82 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import addConstant from '/imports/common/utils';
-import Project from '/imports/common/project';
+import Project from '/imports/model/project';
 import Quote from '/imports/model/quote';
-//import Logger from 'manzato/logging';
-
-class Task extends EventEmitter {
-  constructor(doc) {
-    super();
-    _.extend(this, doc);
-    this._open = new ReactiveVar(false);
-  }
-
-  isOpen() {
-    return this._open.get();
-  }
-
-  open() {
-    console.log('Opening task');
-    this._open.set(true);
-    this.emit('open');
-  }
-
-  close() {
-    console.log('Closing task');
-    this._open.set(false);
-    this.emit('close');
-  }
-
-  getChilds() {
-    return Tasks.find({parent:this._id});
-  }
-
-  hasChilds() {
-    return this.getChilds().count() > 0;
-  }
-
-  updateTasks() {
-    console.log('Processing',(this.hasChilds()?'node':'leaf'),this.code);
-
-    const hours = {
-      estimate: 0,
-      actual: 0
-    };
-
-    if (this.hasChilds()) {
-      this.getChilds().forEach((task) => {
-        task.updateTasks();
-
-        try {
-          hours.estimate += task.hours.estimate;
-          hours.actual += task.hours.actual;
-        } catch (e) {
-          console.log('Failed to process ' + (task.hasChilds()?'node':'leaf') + ' ' + task.code + ':',e, task);
-        }
-      });
-
-    } else {
-      hours.estimate = this.hours.estimate;
-      hours.actual = this.hours.actual;
-    }
-
-      let progress = 0;
-      if (!hours.estimate || !hours.actual) {
-        progress = 0;
-      } else {
-        progress = (hours.actual / hours.estimate ) * 100;
-      }
-      Tasks.update({ _id:this._id }, {
-        $set: {
-          progress:progress,
-          hours:hours
-        }
-      });
-
-      //Makes the hours available to in-memmory processes
-      this.hours = hours;
-  }
-};
+import QuoteItem from '/imports/model/quote_item';
+import Task from '/imports/model/task';
 
 Projects = new Meteor.Collection("projects", {
   transform: function(doc) {
@@ -125,3 +52,11 @@ Quotes = new Meteor.Collection("quotes", {
 });
 
 Quotes.attachBehaviour('timestampable');
+
+QuoteItems = new Meteor.Collection("quoteitems", {
+  transform: function(doc) {
+    return new QuoteItem(doc);
+  }
+});
+
+QuoteItems.attachBehaviour('timestampable');
