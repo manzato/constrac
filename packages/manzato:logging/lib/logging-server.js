@@ -1,5 +1,3 @@
-const moment = Npm.require("moment");
-
 const toFixedLength = function(str, length) {
   let diff = length - str.length;
 
@@ -19,17 +17,11 @@ _print = function(type, level, ns, caller_args, show_timestamp, show_package) {
   // turn args from an array-like obj to a real array
   const args = Array.prototype.slice.call(caller_args);
 
-  if (show_package) {
-    args.unshift('[' + toFixedLength(ns, 16) + '|' + level + ']');
-  }
+  show_package && args.unshift('[' + toFixedLength(ns, 16) + '|' + level + ']');
 
-  if (show_timestamp) {
-    // Add to the beginning of the arguments a timestamp
-    const timestamp = moment().format('YYYYMMDD HH:mm:ss.SSS');
-    args.unshift(timestamp);
-  }
+  // Add timestamp as the first argument
+  show_timestamp && args.unshift(moment().format('YYYYMMDD HH:mm:ss.SSS'));
 
-  // forward args to console method, so the objects (like stacks) will print nicely
   console[type].apply(console, args);
   return true;
 };

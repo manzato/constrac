@@ -4,14 +4,13 @@ Package.describe({
   version: '1.0.0'
 });
 
-Npm.depends({moment:'2.14.1'});
-
 Package.onUse(function(api) {
-  api.versionsFrom('1.3.2.4');
+  api.versionsFrom('1.4.2.3');
   api.use([
     'underscore',
     'modules',
-    'ecmascript'
+    'ecmascript',
+    'momentjs:moment'
   ]);
 
   api.addFiles([

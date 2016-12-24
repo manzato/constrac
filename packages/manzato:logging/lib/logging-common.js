@@ -23,7 +23,7 @@ LoggerObject = function(namespace, show_timestamp, show_package) {
 };
 
 //The extra space at the end of 'INFO ' is
-// for alignment of the logs
+// for the output alignment of the logs
 LoggerObject.prototype.log = function() {
   return _print('log', 'INFO ', this.namespace, arguments,
     this.show_timestamp, this.show_package);

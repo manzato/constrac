@@ -10,7 +10,7 @@ logger.warn('Brrrrr!');
 Meteor Settings:
 {
   public: {
-    client_logging: { // This affects to client logging
+    logger: { // This affects client logging
       default: 'WARN', //Defaults to INFO
       levels: {
         moduleA: {
@@ -19,7 +19,7 @@ Meteor Settings:
       }
     }
   },
-  server_logging: { // This affects to server logging
+  logger: { // This affects server logging
     default: 'DEBUG', //Defaults to INFO
     levels: {
       moduleB: {
@@ -33,7 +33,7 @@ Meteor Settings:
 // Too bad we don't have loggers ;-)
 const TRACE = false;
 
-const PACKAGE_SEPARATOR = ':';
+const NAMESPACE_SEPARATOR = ':';
 
 const loggers = {};
 let namespaceLevels = {};
@@ -59,7 +59,7 @@ const getConfigValue = (key, defVal) => {
 const initialize = function() {
   TRACE && console.log('Initializing Logger');
 
-  const key = (Meteor.isClient ? 'public.logging' : 'logging');
+  const key = (Meteor.isClient ? 'public.logger' : 'logger');
 
   defaultLevel = getConfigValue(key + '.default', 'DEBUG');
 
@@ -72,7 +72,7 @@ const initialize = function() {
   TRACE && console.log('Namespace levels:', namespaceLevels);
 
   // Client dont't show timestamps
-  showTimestamp = Meteor.isServer && Boolean(getConfigValue(key + '.show_timestamp', false));
+  showTimestamp = Meteor.isServer && Boolean(getConfigValue(key + '.show_timestamp', true));
 
   TRACE && console.log('Show timestamp:', showTimestamp);
 
@@ -84,11 +84,11 @@ const initialize = function() {
   initialized = true;
 };
 
-//Flatterns the settings object to an object to 1-level string keys
+//Flatterns the settings object to a 1-level hash
 const populateLevels = function(levels, current) {
   const r = {};
   _.each(levels, function(level, key) {
-    const c = current ? current+PACKAGE_SEPARATOR+key : key;
+    const c = current ? current+NAMESPACE_SEPARATOR+key : key;
     if (_.isObject(level)) {
       _.extend(r, populateLevels(level, c));
     } else {
@@ -104,7 +104,7 @@ const getLevelForNamespace = function(namespace) {
     if (namespaceLevels[current]) {
       return namespaceLevels[current];
     }
-    const ndx = current.lastIndexOf(PACKAGE_SEPARATOR);
+    const ndx = current.lastIndexOf(NAMESPACE_SEPARATOR);
 
     current = ndx == -1 ? null : current.substring(0, ndx);
   } while(current != null);
